@@ -6,19 +6,66 @@ Ejercicio creado para explicar los siguientes conceptos:
 */
 package codigo;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
 /**
  *
  * @author Ernesto De Vicente
  */
 public class VentanaJuego extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VentanaJuego
-     */
+    static int ANCHOPANTALLA = 600;
+    static int ALTOPANTALLA =450;
+    
+    
+    BufferedImage buffer = null;
+    //bucle de animacion de juego
+    //En este caso es un hilo de ejecucion que se encarga 
+    //de refrescar contenido de la pantalla
+    Timer temporizador = new Timer(10,new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            bucleDelJuego();
+            //TODO codigo de la animacion
+        }
+    });
+            
+            
+            
     public VentanaJuego() {
         initComponents();
+        setSize(ANCHOPANTALLA,ALTOPANTALLA);
+        buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA,ALTOPANTALLA);
+        buffer.createGraphics();
+        //activo temporizador
+        temporizador.start();
     }
 
+    
+    private void bucleDelJuego(){
+        //el bucle de animacion gobierna el redibujado de los objetos en 
+        //el jPanel1
+        Graphics2D g2 = (Graphics2D) buffer.getGraphics();
+        g2.setColor(Color.black);
+        g2.fillRect(0, 0, ANCHOPANTALLA,ALTOPANTALLA);
+/////////////////////////////////////////////////////////        
+// redibujamos cada elemento en su nueva posicion en el buffer
+
+
+
+/////////////////////////////////////////////////////////
+
+
+//dibujo de golpe el buffer sobre el jpanel
+        g2 =(Graphics2D) jPanel1.getGraphics();
+        g2.drawImage(buffer, 0, 0,null);
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,17 +75,30 @@ public class VentanaJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 743, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 555, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -80,5 +140,6 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
