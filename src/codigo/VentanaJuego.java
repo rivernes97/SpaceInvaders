@@ -24,6 +24,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     
     BufferedImage buffer = null;
+    int contador =0;
+    
     //bucle de animacion de juego
     //En este caso es un hilo de ejecucion que se encarga 
     //de refrescar contenido de la pantalla
@@ -59,7 +61,8 @@ public class VentanaJuego extends javax.swing.JFrame {
 
 
 /////////////////////////////////////////////////////////
-
+    contador ++;
+        System.out.println(contador);
 
 //dibujo de golpe el buffer sobre el jpanel
         g2 =(Graphics2D) jPanel1.getGraphics();
