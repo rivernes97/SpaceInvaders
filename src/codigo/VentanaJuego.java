@@ -3,7 +3,7 @@
 Ejercicio creado para explicar los siguientes conceptos:
 -Hijos de ejecuicion paralela
 
-*/
+ */
 package codigo;
 
 import java.awt.Color;
@@ -19,63 +19,80 @@ import javax.swing.Timer;
  * @author Ernesto De Vicente
  */
 public class VentanaJuego extends javax.swing.JFrame {
+
     static int ANCHOPANTALLA = 600;
-    static int ALTOPANTALLA =450;
-    
-    
+    static int ALTOPANTALLA = 450;
+
     BufferedImage buffer = null;
-    int contador =0;
+    int contador = 0;
     Nave miNave = new Nave(ANCHOPANTALLA);
     Disparo miDisparo = new Disparo(ALTOPANTALLA);
-    
+    Marciano miMarciano = new Marciano(ANCHOPANTALLA);
     //bucle de animacion de juego
     //En este caso es un hilo de ejecucion que se encarga 
     //de refrescar contenido de la pantalla
-    Timer temporizador = new Timer(10,new ActionListener() {
+    Timer temporizador = new Timer(10, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             bucleDelJuego();
             //TODO codigo de la animacion
         }
     });
-            
-            
-            
+
     public VentanaJuego() {
         initComponents();
-        setSize(ANCHOPANTALLA + 5,ALTOPANTALLA + 29);
-        buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA,ALTOPANTALLA );
+        setSize(ANCHOPANTALLA + 5, ALTOPANTALLA + 29);
+        buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         buffer.createGraphics();
-        miNave.x = ANCHOPANTALLA/2 - miNave.imagen.getWidth(this)/2;
-        miNave.y = ALTOPANTALLA - miNave.imagen.getHeight(this)-10;
+        miNave.x = ANCHOPANTALLA / 2 - miNave.imagen.getWidth(this) / 2;
+        miNave.y = ALTOPANTALLA - miNave.imagen.getHeight(this) - 10;
+
+        miMarciano.x = 10;
+        miMarciano.y = 10;
         //activo temporizador
         temporizador.start();
     }
 
-    
-    private void bucleDelJuego(){
+    private void bucleDelJuego() {
         //el bucle de animacion gobierna el redibujado de los objetos en 
         //el jPanel1
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.black);
-        g2.fillRect(0, 0, ANCHOPANTALLA,ALTOPANTALLA);
-/////////////////////////////////////////////////////////        
-// redibujamos cada elemento en su nueva posicion en el buffer
+        g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
 
+        contador++;
 
-
-/////////////////////////////////////////////////////////
-    //contador ++;
-     //pinto la nave
-     g2.drawImage(miNave.imagen,miNave.x,miNave.y,null);
-
-//dibujo de golpe el buffer sobre el jpanel
-        g2 =(Graphics2D) jPanel1.getGraphics();
-        g2.drawImage(buffer, 0, 0,null);
+        //pinto el disparo
         miDisparo.mueve();
-        g2.drawImage(miDisparo.imagen,miDisparo.getX(),miDisparo.getY(),null);
+        g2.drawImage(miDisparo.imagen, miDisparo.getX(), miDisparo.getY(), null);
+
+        //pinto la nave
         miNave.mueve();
+        g2.drawImage(miNave.imagen, miNave.x, miNave.y, null);
+        
+        
+        miMarciano.mueve();
+            
+        if (contador < 50) {
+            g2.drawImage(miMarciano.imagen, miMarciano.x, miMarciano.y, null);
+        } else if (contador < 100) {
+            g2.drawImage(miMarciano.imagen2, miMarciano.x, miMarciano.y, null);
+        } else {
+            contador = 0;
+            
+            if (miMarciano.x == ANCHOPANTALLA  - miMarciano.imagen.getWidth(null)|| miMarciano.x ==0){
+                miMarciano.direccion =! miMarciano.direccion;
+                miMarciano.y += miMarciano.imagen.getHeight(null);
+            }
+        }
+
+        //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////
+//dibujo de golpe el buffer sobre el jpanel
+        g2 = (Graphics2D) jPanel1.getGraphics();
+        g2.drawImage(buffer, 0, 0, null);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,25 +141,36 @@ public class VentanaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        switch(evt.getKeyCode()){
-            case KeyEvent.VK_LEFT:miNave.setPulsadoIzquierda(true);break;
-            case KeyEvent.VK_RIGHT:miNave.setPulsadoDerecho(true);break;
-            case KeyEvent.VK_SPACE:miDisparo.setDisparado(true);
-            miDisparo.posicionaDisparo(miNave);break;
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                miNave.setPulsadoIzquierda(true);
+                break;
+            case KeyEvent.VK_RIGHT:
+                miNave.setPulsadoDerecho(true);
+                break;
+            case KeyEvent.VK_SPACE:
+                miDisparo.setDisparado(true);
+                miDisparo.posicionaDisparo(miNave);
+                break;
         }
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-            switch(evt.getKeyCode()){
-            case KeyEvent.VK_LEFT:miNave.setPulsadoIzquierda(false);break;
-            case KeyEvent.VK_RIGHT:miNave.setPulsadoDerecho(false);break;
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                miNave.setPulsadoIzquierda(false);
+                break;
+            case KeyEvent.VK_RIGHT:
+                miNave.setPulsadoDerecho(false);
+                break;
     }//GEN-LAST:event_formKeyReleased
     }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+//        /* Set the Nimbus look and feel */                                F
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

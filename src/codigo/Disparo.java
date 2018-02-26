@@ -30,7 +30,7 @@ public class Disparo {
     }
 public void mueve(){
     if (y > 0 ){
-        y-=2;
+        y-=7;
     }
 }
 
