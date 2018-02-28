@@ -77,12 +77,15 @@ public class VentanaJuego extends javax.swing.JFrame {
                   contador = 0;
                  if (listaMarciano[i][j].x == ANCHOPANTALLA  - listaMarciano[i][j].imagen.getWidth(null)|| listaMarciano[i][j].x ==0){
              direccionMarcianos =! direccionMarcianos;
-               listaMarciano[i][j].y += listaMarciano[i][j].imagen.getHeight(null);
+             for(int k =0 ; k < filasMarcianos ; k++){
+                  for(int m =0 ; m < columnasMarcianos ; m++){
+               listaMarciano[k][m].y += listaMarciano[k][m].imagen.getHeight(null);
+             
            }
-
+                 }
               }
           }
-          }
+          }}
           private void bucleDelJuego() {
         //el bucle de animacion gobierna el redibujado de los objetos en 
         //el jPanel1
