@@ -18,7 +18,7 @@ public class Marciano {
     public int y =0;
    
     private int AnchoPantalla;
-    public boolean direccion = false ;//si es false se mueve a la izquierda  
+  
     
     public Marciano(int _anchoPantalla){
         try {
@@ -32,7 +32,7 @@ public class Marciano {
     }
 
  
-    public void mueve(){
+    public void mueve(boolean direccion){
         if (direccion) {
             
         
